@@ -1,0 +1,40 @@
+#!/bin/sh
+
+
+case "$1" in
+    start)
+    printf "Starting Tidal Connect: "
+    chattr -i /etc/asound.conf
+    if grep -q USB /etc/output; then
+	# Enable USB Audio
+	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+    fi
+    sync
+        for count in 1 2 3 4 5 6 7 8 9 10
+            do
+	    network=`/sbin/ip route show`
+            if [ -n "${network}" ]; then
+            break                                                
+            fi                                                   
+            sleep 1                                                  
+            if [ $count -eq 10 ]; then                           
+            echo "No network"                                    
+            break                                                
+            fi                                                   
+        done
+    start-stop-daemon --start --quiet --background --exec /usr/bin/start_tc  \
+	&& echo "OK" || echo "FAIL"
+	;;
+    stop)
+	/usr/bin/stop_tc
+	;;
+    *)
+	exit 1
+esac
+
+
+
+
+
+
+

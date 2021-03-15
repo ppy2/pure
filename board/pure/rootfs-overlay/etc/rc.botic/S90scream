@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+    printf "Starting Spotify: "
+    chattr -i /etc/asound.conf
+    if grep -q USB /etc/output; then
+	# Enable USB Audio
+	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+    fi
+    sync
+    nice -n -15 /sbin/scream  > /dev/null 2>&1 &
+	;;
+    stop)
+    killall scream
+    ;;
+    *)
+	exit 1
+esac
+

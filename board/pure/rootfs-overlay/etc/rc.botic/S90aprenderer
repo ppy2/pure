@@ -1,0 +1,45 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+    echo "" > /usr/aprenderer/aprenderer.log
+    printf "Starting APlayer UPNP: "
+    chattr -i /etc/asound.conf
+    grep -q "APrenderer" /etc/asound.conf || cat /etc/asound.ap > /etc/asound.conf
+    sync
+    grep -q USB /etc/output && sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+    sync    
+    chattr +i /etc/asound.conf
+    for count in 1 2 3 4 5 6 7 8 9 10
+        do
+        network=`ifconfig eth0 |grep "inet addr"`
+        if [ -n "${network}" ]; then
+        break
+        fi
+        sleep 1
+        if [ $count -eq 10 ]; then
+        echo "No network"
+        break
+        fi
+    done
+
+    MAC=`cat /sys/class/net/eth0/address`
+    NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
+    sed -i -e "s/<mac>.*<\/mac>/<mac>$MAC<\/mac>/g" /usr/aprenderer/upnp/config.xml
+#    sed -i -e "s/<friendly_name>.*<\/friendly_name>/<friendly_name>$NAME<\/friendly_name>/g" /usr/aprenderer/upnp/config.xml
+    sed -i -e "s/<name>.*<\/name>/<name>$NAME<\/name>/g" /usr/aprenderer/upnp/config.xml
+
+    /usr/aprenderer/upnp/squeeze2upnp -z -k -x /usr/aprenderer/upnp/config.xml > /dev/null 2>&1
+    cd /usr/aprenderer; nice -n -15 ./ap2renderer > /dev/null 2>&1 && echo "OK" || echo "FAIL"
+    ;;
+  stop)
+	killall ap2renderer squeeze2upnp
+	chattr -i /etc/asound.conf
+	cat /etc/asound.botic > /etc/asound.conf
+	grep -q USB /etc/output && sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+	sync
+    ;;
+    *)	
+	echo "Usage: $0 {start|stop}"
+	exit 1
+esac

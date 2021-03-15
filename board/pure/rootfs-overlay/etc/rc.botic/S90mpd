@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Sanity checks
+test -f /etc/mpd.conf || exit 0
+
+case "$1" in
+  start)
+    printf "Starting mpd: "
+    chattr -i /etc/asound.conf
+    if grep -q USB /etc/output; then
+        # Enable USB Audio
+	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+	sed -i -e 's/hw:0,0/hw:1,0/g' /etc/mpd.conf
+    else
+	# Enable I2S Botic7
+        sed -i -e 's/card 1/card 0/g' /etc/asound.conf
+	sed -i -e 's/hw:1,0/hw:0,0/g' /etc/mpd.conf
+    fi
+    sync
+    start-stop-daemon --start --quiet --background --exec nice -n -15 /usr/bin/mpd \
+	&& echo "OK" || echo "FAIL"
+    ;;
+    stop)
+    killall mpd
+    ;;
+    *)
+	exit 1
+esac

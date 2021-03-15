@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME=upmpdcli
+CONFFILE=/etc/$NAME.conf
+PIDFILE=/var/run/$NAME.pid
+DAEMON_ARGS="-D -c $CONFFILE"
+
+case "$1" in
+    start)
+        printf "Starting $NAME: "
+	NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
+	sed -i "s/^friendlyname.*/friendlyname = $NAME/" /etc/upmpdcli.conf
+	start-stop-daemon --start --quiet --background --exec /usr/bin/upmpdcli \
+                -- $DAEMON_ARGS \
+                && echo "OK" || echo "FAIL"
+                ;;
+        stop)
+        killall upmpdcli
+        ;;
+        *)
+                exit 1
+esac

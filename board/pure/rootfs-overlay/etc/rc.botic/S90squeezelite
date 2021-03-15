@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
+OPTIONS="-M $NAME"
+
+case "$1" in
+    start)
+        printf "Starting Squeezelite: "
+        chattr -i /etc/asound.conf
+    if grep -q USB /etc/output; then
+	# Enable USB Audio
+	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+    fi
+    sync
+        start-stop-daemon --start --quiet --background --exec nice -n -15 /usr/bin/squeezelite -- $OPTIONS
+                ;;
+    stop)
+    killall squeezelite
+    ;;
+        *)
+                exit 1
+esac
