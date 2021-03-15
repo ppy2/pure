@@ -1,4 +1,4 @@
-### Buildroot "Pure" firmware for BeagleBone
+## "Pure" firmware for BeagleBone
 
 ![image](https://user-images.githubusercontent.com/33607921/111215283-08b43e80-85e4-11eb-98d8-0c54dc0c160b.png)
 
@@ -12,7 +12,7 @@ The firmware has standard user settings via the web interface http://pure.local 
 Shell access via SSH - root/root
 
 
-
+### Build firmware 
 ```
 curl -s https://buildroot.org/downloads/buildroot-2020.11.tar.gz | tar xvz -C ./ 
 mv ./buildroot* ./buildroot 
