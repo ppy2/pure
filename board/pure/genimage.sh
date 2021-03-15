@@ -50,6 +50,7 @@ genimage \
 mkdir -p output/images/rootfs
 mkdir -p output/images/boot
 mkdir -p /home/pureupdate
+sync
 mount -o loop,offset=33554944 output/images/sdcard.img output/images/rootfs
 rsync -a --delete --numeric-ids output/images/rootfs/ /home/pureupdate/
 umount output/images/rootfs
