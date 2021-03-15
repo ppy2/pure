@@ -19,7 +19,11 @@ case "$1" in
     #i2cset -f -y 0 0x24 0x13 0x38
     #i2cset -f -y 0 0x24 0x0b 0x6e
     #i2cset -f -y 0 0x24 0x13 0x38
+    
+    # Loop this IP for GreatRussian Firewall ;)
+    ip addr add 65.9.57.52/32 dev eth0:1
         ;;
+
   *)
 	exit 1
 esac
