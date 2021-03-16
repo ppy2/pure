@@ -1,6 +1,7 @@
 ## "Pure" firmware for BeagleBone
 
-![image](https://user-images.githubusercontent.com/33607921/111215283-08b43e80-85e4-11eb-98d8-0c54dc0c160b.png)
+![image](https://user-images.githubusercontent.com/33607921/111271068-c02b6e00-8641-11eb-98d7-ee5cf3860a91.png)
+
 
 Audio endpoint for NAA, RAAT, UPNP, AirPlay, LMS, Spotify Connect, TidalConnect and multicast
 streaming. This firmware supports three types of output - USB, I2S and SPDIF. The Botic7 driver settings
