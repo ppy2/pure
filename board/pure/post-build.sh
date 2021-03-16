@@ -12,4 +12,5 @@ sed -i "s/ver.<\/span>/ver. $DATE<\/span>/g" $TARGET_DIR/var/www/tabs.php
 #sed -i "s/xxxxxxx/$UID/g" $TARGET_DIR/etc/raat.conf
 echo " " >> $TARGET_DIR/var/www/tabs.php
 echo " " >> ../board/pure/rootfs-overlay/var/www/tabs.php
+cp -f $BOARD_DIR/S41dhcpcd $TARGET_DIR/etc/init.d/S41dhcpcd
 

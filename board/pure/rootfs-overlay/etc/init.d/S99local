@@ -21,7 +21,7 @@ case "$1" in
     #i2cset -f -y 0 0x24 0x13 0x38
     
     # Loop this IP for GreatRussian Firewall ;)
-    ip addr add 65.9.57.52/32 dev eth0:1
+    #ip addr add 65.9.57.52/32 dev eth0:1
         ;;
 
   *)

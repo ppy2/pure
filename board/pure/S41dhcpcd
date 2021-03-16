@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+    echo "Starting dhcpcd..."
+     /sbin/dhcpcd -4A --nodelay -O ntp_servers -c /dev/null --nodev
+    ;;
+  *)
+    exit 1
+esac
