@@ -22,8 +22,10 @@ while [ $i -lt 300 ]
     fi
     sleep 1
 done
-
+    
+    # Disabled IP for Great Russian Firewall :)
     iptables -A OUTPUT -p tcp -d 65.9.57.52 -j REJECT
+    
     start-stop-daemon --start --quiet --background --exec /usr/bin/start_tc  \
 	&& echo "OK" || echo "FAIL"
 	;;
