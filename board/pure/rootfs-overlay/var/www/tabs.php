@@ -161,20 +161,32 @@ $update = 0;
 											if( exec('grep '.escapeshellarg($_GET['']).' /etc/output') == 'USB' ) {
 												echo "<div class='buttonSpacer'><span class='unselOutputText'>USB</span></div>";
 												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText' name='i2sOutput' value='I2S'/></div>";
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText' name='i2slrOutput' value='I2S(L/R)'/></div>";
 												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText' name='spdifOutput' value='SPDIF'/></div>";
-											} else if ( exec('grep '.escapeshellarg($_GET['']).' /etc/output') == 'I2S' ) {
-												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='usbOutput' value='USB'/></div>";
+												}
+											else if ( exec('grep '.escapeshellarg($_GET['']).' /etc/output') == 'I2S' ) {
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='usbOutput' value=' USB'/></div>";
 												echo "<div class='buttonSpacer'><span class='unselOutputText'>I2S</span></div>";
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText' name='i2slrOutput' value='I2S(L/R)'/></div>";
 												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='spdifOutput' value='SPDIF'/></div>";
-											} else if ( exec('grep '.escapeshellarg($_GET['']).' /etc/output') == 'SPDIF' ) {
+												}
+											else if ( exec('grep '.escapeshellarg($_GET['']).' /etc/output') == 'I2SLR' ) {
 												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='usbOutput' value='USB'/></div>";
 												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='i2sOutput' value='I2S'/></div>";
+												echo "<div class='buttonSpacer'><span class='unselOutputText'>I2S(L/R)</span></div>";
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='spdifOutput' value='SPDIF'/></div>";
+												}
+											else if ( exec('grep '.escapeshellarg($_GET['']).' /etc/output') == 'SPDIF' ) {
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='usbOutput' value='USB'/></div>";
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='i2sOutput' value='I2S'/></div>";
+												echo "<div class='buttonSpacer'><input type='submit' class='selOutputText' name='i2slrOutput' value='I2S(L/R)'/></div>";
 												echo "<div class='buttonSpacer'><span class='unselOutputText'>SPDIF</span></div>";
-											}
+												}
 										} else {
 											echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='usbOutput' value='USB'/></div>";
 											echo "<div class='buttonSpacer'><span class='unselOutputText'>I2S</span></div>";
 											echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='spdifOutput' value='SPDIF'/></div>";
+											echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='i2srlOutput' value='I2S(R/L)'/></div>";
 										}
 										?>
 										</div>
@@ -354,6 +366,10 @@ $update = 0;
 		exec ('/opt/to_i2s.sh' . '>/dev/null &'); 
 		echo '<script type="text/javascript">updatePage();</script>';
 		echo '<script type="text/javascript">setTimeout(function() {window.location = window.location.href; }, 1000);</script>';
+	} else if(isset($_POST['i2slrOutput']) && $_POST["i2slrOutput"] != "" ){
+		exec ('/opt/to_i2slr.sh' . '>/dev/null &'); 
+		echo '<script type="text/javascript">updatePage();</script>';
+		echo '<script type="text/javascript">setTimeout(function() {window.location = window.location.href; }, 1000);</script>';
 	} else if(isset($_POST['spdifOutput']) && $_POST["spdifOutput"] != "" ){
 		exec ('/opt/to_spdif.sh' . '>/dev/null &');
 		echo '<script type="text/javascript">updatePage();</script>';
@@ -371,30 +387,4 @@ $update = 0;
 	}					
 ?>
 </body>
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
