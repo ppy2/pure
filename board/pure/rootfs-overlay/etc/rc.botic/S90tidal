@@ -11,8 +11,7 @@ case "$1" in
     fi
     sync
 
-i=1
-while [ $i -lt 300 ]
+    while [ $i -lt 300 ]
     do
     echo "Number: $i"
     ((i++))
@@ -21,17 +20,22 @@ while [ $i -lt 300 ]
     break
     fi
     sleep 1
-done
-    
-    # Disabled IP for Great Russian Firewall :)
-    iptables -A OUTPUT -p tcp -d 65.9.57.52 -j REJECT
-    
+    done
+
+	ip addr add 52.85.115.21/32 dev eth0:1
+	ip addr add 52.85.242.31/32 dev eth0:2
+	ip addr add 52.85.115.61/32 dev eth0:3
+    sleep 0.5
     start-stop-daemon --start --quiet --background --exec /usr/bin/start_tc  \
 	&& echo "OK" || echo "FAIL"
 	;;
     stop)
 	/usr/bin/stop_tc
-	;;
+	ip addr del 52.85.115.21/32 dev eth0:1
+	ip addr del 52.85.242.31/32 dev eth0:2
+	ip addr del 52.85.115.61/32 dev eth0:3
+
+    ;;
     *)
 	exit 1
 esac

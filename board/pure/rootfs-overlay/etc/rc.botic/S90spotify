@@ -10,18 +10,17 @@ case "$1" in
     fi
     sync
 
-    for count in 1 2 3 4 5 6 7 8 9 10
+    while [ $i -lt 300 ]
     do
-	network=`/sbin/ip route show`
-	if [ -n "${network}" ]; then
-	break
-	fi
+    echo "Number: $i"
+    ((i++))
+    network=`ifconfig eth0 |grep "inet addr"`
+    if [[ -n "$network"  ]]; then
+    break
+    fi
     sleep 1
-	if [ $count -eq 10 ]; then
-	echo "No network"
-	break
-	fi
     done
+
     /usr/bin/sntp ntp1.stratum2.ru
     NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
     nice -n -15 /sbin/spotifyd --no-audio-cache --no-daemon --cache-path /tmp --bitrate 320 -d $NAME > /dev/null 2>&1 &

@@ -30,6 +30,7 @@ case "$1" in
     sed -i -e "s/<name>.*<\/name>/<name>$NAME<\/name>/g" /usr/aprenderer/upnp/config.xml
     /usr/aprenderer/upnp/squeeze2upnp -z -k -x /usr/aprenderer/upnp/config.xml > /dev/null 2>&1
     cd /usr/aprenderer; nice -n -15 ./ap2renderer > /dev/null 2>&1 && echo "OK" || echo "FAIL"
+    sync    
     ;;
   stop)
 	killall ap2renderer squeeze2upnp

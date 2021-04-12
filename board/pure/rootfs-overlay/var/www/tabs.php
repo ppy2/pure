@@ -152,6 +152,7 @@ $update = 0;
 						<div class='row'>
 							<div id='output'>
 								<span class="title">Output type selection:</span>
+								<br>
 								<div>
 									<form method="post">
 										<div>
@@ -188,6 +189,7 @@ $update = 0;
 											echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='spdifOutput' value='SPDIF'/></div>";
 											echo "<div class='buttonSpacer'><input type='submit' class='selOutputText'  name='i2srlOutput' value='I2S(R/L)'/></div>";
 										}
+										echo "<br> <br>" ;
 										?>
 										</div>
 									</form>
@@ -387,4 +389,42 @@ $update = 0;
 	}					
 ?>
 </body>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
