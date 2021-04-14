@@ -1,13 +1,8 @@
 #! /bin/sh
 
-
-# Additional options that are passed to Shairport Sync
 NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
 OPTIONS="-d --name=$NAME"
 
-case "$1" in
-    start)
-	pidof shairport-sync && exit
         printf "Starting shairport-sync: "
         chattr -i /etc/asound.conf
     if grep -q USB /etc/output; then
@@ -15,12 +10,6 @@ case "$1" in
 	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
     fi
     sync
-        start-stop-daemon -S -q --exec nice -n -15 /usr/bin/shairport-sync -- $OPTIONS
-        [ $? = 0 ] && echo "OK" || echo "FAIL"
-    ;;
-    stop)
-    killall shairport-sync
-    ;;
-    *)
-        exit 1
-esac
+
+exec nice -n -15 /usr/bin/shairport-sync -- $OPTIONS
+

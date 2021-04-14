@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec  /usr/aprenderer/upnp/squeeze2upnp -z -k -x /usr/aprenderer/upnp/config.xml
+

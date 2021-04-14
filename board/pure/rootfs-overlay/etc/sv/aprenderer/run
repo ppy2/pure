@@ -1,7 +1,5 @@
 #!/bin/sh
 
-case "$1" in
-  start)
     echo "" > /usr/aprenderer/aprenderer.log
     printf "Starting APlayer UPNP: "
     chattr -i /etc/asound.conf
@@ -26,20 +24,8 @@ case "$1" in
     MAC=`cat /sys/class/net/eth0/address`
     NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
     sed -i -e "s/<mac>.*<\/mac>/<mac>$MAC<\/mac>/g" /usr/aprenderer/upnp/config.xml
-#    sed -i -e "s/<friendly_name>.*<\/friendly_name>/<friendly_name>$NAME<\/friendly_name>/g" /usr/aprenderer/upnp/config.xml
     sed -i -e "s/<name>.*<\/name>/<name>$NAME<\/name>/g" /usr/aprenderer/upnp/config.xml
-    /usr/aprenderer/upnp/squeeze2upnp -z -k -x /usr/aprenderer/upnp/config.xml > /dev/null 2>&1
-    cd /usr/aprenderer; nice -n -15 ./ap2renderer > /dev/null 2>&1 && echo "OK" || echo "FAIL"
+    /usr/aprenderer/upnp/squeeze2upnp -z -k -x /usr/aprenderer/upnp/config.xml
+    cd /usr/aprenderer
+    exec nice -n -15 ./ap2renderer 
     sync    
-    ;;
-  stop)
-	killall ap2renderer squeeze2upnp
-	chattr -i /etc/asound.conf
-	cat /etc/asound.botic > /etc/asound.conf
-	grep -q USB /etc/output && sed -i -e 's/card 0/card 1/g' /etc/asound.conf
-	sync
-    ;;
-    *)	
-	echo "Usage: $0 {start|stop}"
-	exit 1
-esac

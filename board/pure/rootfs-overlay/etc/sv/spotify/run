@@ -1,0 +1,24 @@
+#!/bin/sh
+
+    printf "Starting Spotify: "
+    chattr -i /etc/asound.conf
+    if grep -q USB /etc/output; then
+	# Enable USB Audio
+	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+    fi
+    sync
+
+    while [ $i -lt 300 ]
+    do
+    echo "Number: $i"
+    ((i++))
+    network=`ifconfig eth0 |grep "inet addr"`
+    if [[ -n "$network"  ]]; then
+    break
+    fi
+    sleep 1
+    done
+
+    NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
+
+exec nice -n -15 /sbin/spotifyd --no-audio-cache --no-daemon --cache-path /tmp --bitrate 320 -d $NAME

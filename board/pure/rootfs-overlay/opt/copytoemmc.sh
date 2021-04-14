@@ -30,4 +30,5 @@ echo "" >> /mnt/boot/uEnv.txt
 grep "optargs="  /boot/uEnv.txt  >>  /mnt/boot/uEnv.txt
 
 sync
-poweroff
+poweroff -f
+

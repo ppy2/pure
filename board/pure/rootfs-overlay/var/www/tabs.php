@@ -134,7 +134,7 @@ $update = 0;
 									</div>
 									<div class='cell'>
 										<?php
-										 $tf = '/etc/init.d/S90tidal';
+										 $tf = '/etc/init.d/S91tidal';
 										 if (file_exists($tf)) {
 										 echo '<input type="submit" name="tidalButton" value="" id="tidalButton" class="selButton"/><input type="submit" id="tidalText" name="tidalButton" value="Tidal Connect" class="selButtonText"/>';
 										 } else {
@@ -251,33 +251,36 @@ $update = 0;
 <?php
 	if(isset($_POST['naaButton'])){
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 mpd upmpdcli startroon.sh raat_app shairport-sync squeezelite spotifyd scream ;
-                /etc/init.d/S90aprenderer stop ;
-                rm /etc/init.d/S90* ;
-                /etc/rc.botic/S90tidal stop ;
-                cp /etc/rc.botic/S90naa /etc/init.d/ && sync ; 
-                /etc/rc.botic/S90naa start` ; }
+		killall -9 mpd upmpdcli startroon.sh raat_app shairport-sync squeezelite scream;
+                /etc/init.d/S90spotifyd stop ;
+		/etc/init.d/S90ap2renderer stop ;
+                rm /etc/init.d/S9[0-1]* ;
+                /etc/rc.botic/S91tidal stop ;
+                cp /etc/rc.botic/S90networkaudiod /etc/init.d/ && sync ; 
+                /etc/rc.botic/S90networkaudiod start` ; }
     		echo '<script type="text/javascript">removeSelButtons();</script>';
 		echo '<script type="text/javascript">document.getElementById("naaButton").classList.remove("unselButton"); document.getElementById("naaButton").classList.add("selButton");</script>';
 		echo '<script type="text/javascript">document.getElementById("naaText").classList.remove("unselButtonText"); document.getElementById("naaText").classList.add("selButtonText");</script>';
 		echo '<script type="text/javascript">console.log("button1");</script>';
 	} else if(isset($_POST['raatButton'])){ 
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 networkaudiod mpd upmpdcli shairport-sync squeezelite spotifyd scream ;
-		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
-		cp /etc/rc.botic/S90roonready /etc/init.d/ && sync ; 
-		/etc/rc.botic/S90roonready start` ; }
+		killall -9 networkaudiod mpd upmpdcli shairport-sync squeezelite scream ;
+		/etc/init.d/S90spotifyd stop ;
+		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
+		cp /etc/rc.botic/S90raat_app /etc/init.d/ && sync ; 
+		/etc/rc.botic/S90raat_app start` ; }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
 		echo '<script type="text/javascript">document.getElementById("raatButton").classList.remove("unselButton"); document.getElementById("raatButton").classList.add("selButton");</script>';
 		echo '<script type="text/javascript">document.getElementById("raatText").classList.remove("unselButtonText"); document.getElementById("raatText").classList.add("selButtonText");</script>';
 	} else if(isset($_POST['mpdButton'])){ 
                 {`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 networkaudiod startroon.sh raat_app shairport-sync squeezelite spotifyd scream ; 
-    		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
+		killall -9 networkaudiod startroon.sh raat_app shairport-sync squeezelite scream ; 
+		/etc/init.d/S90spotifyd stop ;
+    		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
                 cp /etc/rc.botic/S90mpd /etc/init.d/ ; cp /etc/rc.botic/S90upmpdcli /etc/init.d/ && sync ;
                 /etc/rc.botic/S90mpd start ; /etc/rc.botic/S90upmpdcli start` ;  }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
@@ -285,21 +288,23 @@ $update = 0;
 		echo '<script type="text/javascript">document.getElementById("mpdText").classList.remove("unselButtonText"); document.getElementById("mpdText").classList.add("selButtonText");</script>';
 	} else if(isset($_POST['aplayerButton'])){ 
                 {`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite spotifyd scream ; 
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
-                cp /etc/rc.botic/S90aprenderer /etc/init.d/ && sync ; 
-                /etc/init.d/S90aprenderer start` ; }
+		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite scream ; 
+		/etc/init.d/S90spotifyd stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
+                cp /etc/rc.botic/S90ap2renderer /etc/init.d/ && sync ; 
+                /etc/init.d/S90ap2renderer start` ; }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
 		echo '<script type="text/javascript">document.getElementById("aplayerButton").classList.remove("unselButton"); document.getElementById("aplayerButton").classList.add("selButton");</script>';
 		echo '<script type="text/javascript">document.getElementById("aplayerText").classList.remove("unselButtonText"); document.getElementById("aplayerText").classList.add("selButtonText");</script>';
 		echo '<script type="text/javascript">document.getElementById("settingsLink").style.display="block";</script>';
 	} else if(isset($_POST['airPlayButton'])){ 
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod squeezelite spotifyd scream ; 
-		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
+		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod squeezelite scream ; 
+		/etc/init.d/S90spotifyd stop ;
+		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
 		cp /etc/rc.botic/S90shairport-sync /etc/init.d/ && sync ; 
 		/etc/init.d/S90shairport-sync start` ; }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
@@ -307,10 +312,11 @@ $update = 0;
 		echo '<script type="text/javascript">document.getElementById("airPlayText").classList.remove("unselButtonText"); document.getElementById("airPlayText").classList.add("selButtonText");</script>';
 	} else if(isset($_POST['lmsButton'])){ 
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync spotifyd scream ; 
-		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
+		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync scream ; 
+		/etc/init.d/S90spotifyd stop ;
+		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
 		cp /etc/rc.botic/S90squeezelite /etc/init.d/ && sync ; 
 		/etc/init.d/S90squeezelite start` ; }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
@@ -319,20 +325,21 @@ $update = 0;
 	} else if(isset($_POST['spotifyButton'])){ 
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
 		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite scream ; 
-		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
-		cp /etc/rc.botic/S90spotify /etc/init.d/ && sync ; 
-		/etc/rc.botic/S90spotify start` ;  }
+		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
+		cp /etc/rc.botic/S90spotifyd /etc/init.d/ && sync ; 
+		/etc/init.d/S90spotifyd start` ;  }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
 		echo '<script type="text/javascript">document.getElementById("spotifyButton").classList.remove("unselButton"); document.getElementById("spotifyButton").classList.add("selButton");</script>';
 		echo '<script type="text/javascript">document.getElementById("spotifyText").classList.remove("unselButtonText"); document.getElementById("spotifyText").classList.add("selButtonText");</script>';
 	} else if(isset($_POST['screamButton'])){ 
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite spotifyd tidal_connect_application ; 
-		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		/etc/rc.botic/S90tidal stop ;
+		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite ; 
+		/etc/init.d/S90spotifyd stop ;
+		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		/etc/rc.botic/S91tidal stop ;
 		cp /etc/rc.botic/S90scream /etc/init.d/ && sync ; 
 		nohup /sbin/scream > /dev/null 2>&1 &` ; }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
@@ -340,25 +347,26 @@ $update = 0;
 		echo '<script type="text/javascript">document.getElementById("screamText").classList.remove("unselButtonText"); document.getElementById("screamText").classList.add("selButtonText");</script>';
 	} else if(isset($_POST['tidalButton'])){ 
 		{`echo 1 > /sys/class/gpio/gpio113/value ;
-		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite spotifyd scream; 
-		/etc/init.d/S90aprenderer stop ;
-		rm /etc/init.d/S90* ;
-		cp /etc/rc.botic/S90tidal /etc/init.d/ && sync ; 
-		/etc/rc.botic/S90tidal start` ; }
+		killall -9 mpd upmpdcli startroon.sh raat_app networkaudiod shairport-sync squeezelite scream; 
+		/etc/init.d/S90spotifyd stop ;
+		/etc/init.d/S90ap2renderer stop ;
+		rm /etc/init.d/S9[0-1]* ;
+		cp /etc/rc.botic/S91tidal /etc/init.d/ && sync ; 
+		/etc/rc.botic/S91tidal start` ; }
 		echo '<script type="text/javascript">removeSelButtons();</script>';
 		echo '<script type="text/javascript">document.getElementById("tidalButton").classList.remove("unselButton"); document.getElementById("tidalButton").classList.add("selButton");</script>';
 		echo '<script type="text/javascript">document.getElementById("tidalText").classList.remove("unselButtonText"); document.getElementById("tidalText").classList.add("selButtonText");</script>';
 	} else if(isset($_POST['standartdKernel']) && $_POST["standartdKernel"] != "" ){ 
 		$b = `uname -r |grep "4.9.146-Botic7-std"`;
 		if (empty($b)){
-		{`/bin/sed -i -e 's/bootfile=.*/bootfile=4.9-std/g' /boot/uEnv.txt && sync && reboot` ; }
+		{`/bin/sed -i -e 's/bootfile=.*/bootfile=4.9-std/g' /boot/uEnv.txt && sync && reboot -f` ; }
 		echo '<script type="text/javascript">updatePage();</script>';
 		echo '<script type="text/javascript">setTimeout(function() {window.location = window.location.href; }, 15000);</script>';
 		}
 	} else if(isset($_POST['rtKernel']) && $_POST["rtKernel"] != "" ){ 
 		$b = `uname -r |grep "4.9.146-Botic7-rt"`;
 		if (empty($b)){
-		{`/bin/sed -i -e 's/bootfile=.*/bootfile=4.9-rt/g' /boot/uEnv.txt && sync && reboot` ; }
+		{`/bin/sed -i -e 's/bootfile=.*/bootfile=4.9-rt/g' /boot/uEnv.txt && sync && reboot -f` ; }
 		echo '<script type="text/javascript">updatePage();</script>';
 		echo '<script type="text/javascript">setTimeout(function() {window.location = window.location.href; }, 15000);</script>';
 		}
@@ -389,6 +397,25 @@ $update = 0;
 	}					
 ?>
 </body>
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  

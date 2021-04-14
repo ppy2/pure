@@ -1,0 +1,13 @@
+#!/bin/sh
+
+    chattr -i /etc/asound.conf
+    if grep -q USB /etc/output; then
+	# Enable USB Audio
+	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
+    fi
+    sync
+
+MAC=`cat /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
+sed -i "s/^.*\"unique_id\".*/    \"unique_id\": \"$MAC\" ,/" /etc/raat.conf
+nice -n -15 /opt/RoonReady/raat_app /etc/raat.conf
+

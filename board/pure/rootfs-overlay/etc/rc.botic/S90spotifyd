@@ -1,7 +1,9 @@
 #!/bin/sh
 
+
 case "$1" in
   start)
+    pidof spotifyd && exit
     printf "Starting Spotify: "
     chattr -i /etc/asound.conf
     if grep -q USB /etc/output; then
@@ -9,24 +11,26 @@ case "$1" in
 	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
     fi
     sync
-
+    
+    i=1
     while [ $i -lt 300 ]
-    do
-    echo "Number: $i"
-    ((i++))
-    network=`ifconfig eth0 |grep "inet addr"`
-    if [[ -n "$network"  ]]; then
-    break
-    fi
-    sleep 1
+	do
+	echo "Number: $i"
+	i=$((i+1))
+	network=`ifconfig eth0 |grep "inet addr"`
+	if [[ -n "$network"  ]]; then
+	break
+	fi
+	sleep 1
     done
 
-    /usr/bin/sntp ntp1.stratum2.ru
     NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
     nice -n -15 /sbin/spotifyd --no-audio-cache --no-daemon --cache-path /tmp --bitrate 320 -d $NAME > /dev/null 2>&1 &
+    nohup watch "/etc/rc.botic/S90spotifyd start" > /dev/null 2>&1 &
     ;;
     stop)
-    killall spotifyd
+    killall -9 watch 
+    killall -9 spotifyd
     ;;
       *)
         exit 1

@@ -8,6 +8,7 @@ echo SS-- > /sys/module/snd_soc_botic/parameters/serconfig
 echo SPDIF > /etc/output
 /etc/rc.botic/S10mute stop > /dev/null 2>&1
 sync
-reboot
+reboot -f
+
 
 

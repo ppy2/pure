@@ -11,15 +11,16 @@ case "$1" in
     fi
     sync
 
+    i=1
     while [ $i -lt 300 ]
-    do
-    echo "Number: $i"
-    ((i++))
-    network=`ifconfig eth0 |grep "inet addr"`
-    if [[ -n "$network"  ]]; then
-    break
-    fi
-    sleep 1
+        do
+	echo "Number: $i"
+        i=$((i+1))
+	network=`ifconfig eth0 |grep "inet addr"`
+        if [[ -n "$network"  ]]; then
+        break
+        fi
+	sleep 1
     done
 
 	ip addr add 52.85.115.21/32 dev eth0:1

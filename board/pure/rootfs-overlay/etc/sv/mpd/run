@@ -1,12 +1,8 @@
 #!/bin/sh
 
-
 # Sanity checks
 test -f /etc/mpd.conf || exit 0
 
-case "$1" in
-  start)
-    pidof mpd && exit
     printf "Starting mpd: "
     chattr -i /etc/asound.conf
     if grep -q USB /etc/output; then
@@ -19,12 +15,4 @@ case "$1" in
 	sed -i -e 's/hw:1,0/hw:0,0/g' /etc/mpd.conf
     fi
     sync
-    start-stop-daemon --start --quiet --background --exec nice -n -15 /usr/bin/mpd \
-	&& echo "OK" || echo "FAIL"
-    ;;
-    stop)
-    killall mpd
-    ;;
-    *)
-	exit 1
-esac
+exec nice -n -15 /usr/bin/mpd 

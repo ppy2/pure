@@ -1,10 +1,12 @@
 #!/bin/sh
 
+
 NAME=PURE_`sed -r 's/..:..:..:..:(..):(..)/\1\2/' /sys/class/net/eth0/address | tr 'a-z' 'A-Z'`
 OPTIONS="-M $NAME"
 
 case "$1" in
     start)
+	pidof squeezelite && exit
         printf "Starting Squeezelite: "
         chattr -i /etc/asound.conf
     if grep -q USB /etc/output; then
@@ -13,6 +15,7 @@ case "$1" in
     fi
     sync
         start-stop-daemon --start --quiet --background --exec nice -n -15 /usr/bin/squeezelite -- $OPTIONS
+    /etc/init.d/S95watchdog restart &
                 ;;
     stop)
     killall squeezelite

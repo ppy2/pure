@@ -1,18 +1,21 @@
 #!/bin/sh
 
+
 case "$1" in
     start)
-    printf "Starting NAA: "
+    pidof raat_app && exit
+    printf "Starting RoonBrige: "
     chattr -i /etc/asound.conf
     if grep -q USB /etc/output; then
 	# Enable USB Audio
 	sed -i -e 's/card 0/card 1/g' /etc/asound.conf
     fi
     sync
-    nice -n -15 /sbin/networkaudiod > /tmp/naa.log 2>&1 &
+    start-stop-daemon --start --quiet --background --exec /opt/RoonReady/startroon.sh  \
+	&& echo "OK" || echo "FAIL"
 	;;
     stop)
-    killall -9 networkaudiod
+    killall startroon.sh raat_app
     ;;
     *)
 	exit 1
