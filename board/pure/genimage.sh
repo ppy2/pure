@@ -65,3 +65,4 @@ chmod 644 /home/pureupdate/usr/libexec/ssh-keysign
 
 gzip -f output/images/sdcard.img
 mv output/images/sdcard.img.gz output/images/Pure_`date +"%d_%m_%Y"`.gz
+cp output/images/Pure_`date +"%d_%m_%Y"`.gz ../out/Pure_latest.gz
