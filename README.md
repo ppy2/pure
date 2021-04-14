@@ -22,5 +22,5 @@ After successful compilation, the SD image will be located in buildroot/output/i
 To organize your own rsync update server, you need to replace the /opt/update binary file with your own script.
 The firmware root filesystem files will be written to /home/pureupdate/ on host system.
 
-URL for the latest built firmware.
+URL for the latest built firmware: 
 https://github.com/ppy2/pure/raw/master/out/Pure_latest.gz
