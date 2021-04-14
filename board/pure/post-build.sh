@@ -8,7 +8,7 @@ echo "friendlyname = Pure" >> $TARGET_DIR/etc/upmpdcli.conf
 rm $TARGET_DIR/etc/init.d/*upmpdcli $TARGET_DIR/etc/init.d/*shairport-sync $TARGET_DIR/etc/init.d/*mpd $TARGET_DIR/etc/init.d/*sysctl
 sed -i 's/;cgi.force_redirect = 1/cgi.force_redirect = 0/g' $TARGET_DIR/etc/php.ini
 sed -i 's/;cgi.redirect_status_env =/cgi.redirect_status_env ="yes";/g' $TARGET_DIR/etc/php.ini
-sed -i "s/ver.<\/span>/ver. $DATE<\/span>/g" $TARGET_DIR/var/www/tabs.php
+sed -i "s/ver.<\/span>/ver. $DATE Beta<\/span>/g" $TARGET_DIR/var/www/tabs.php
 sed -i "s/xxxxxxx/$UID/g" $TARGET_DIR/etc/raat.conf
 sed -i "/::shutdown:/d" $TARGET_DIR/etc/inittab
 sed -i "/Stuff to do before/d" $TARGET_DIR/etc/inittab
